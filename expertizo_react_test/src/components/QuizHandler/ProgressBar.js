@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import ProgressBar from "react-bootstrap/ProgressBar";
 
 const QuizProgressBar = ({ progress: { attempted, total } }) => {
