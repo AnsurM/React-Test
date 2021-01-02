@@ -25,7 +25,7 @@ const QuizHandler = () => {
         </Col>
         <Col className="col-md-2"></Col>
       </Row>
-      <Row className="stickyScoreIndicator">
+      <Row>
         <Col>
           <ScorePredictor score={score} />
         </Col>
