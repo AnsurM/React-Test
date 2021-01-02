@@ -1,9 +1,8 @@
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import { useEffect } from "react";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
-const QuizProgressBar = ({progress}) => {
-    return (
-        <ProgressBar now={progress} />
-    )
-}
+const QuizProgressBar = ({ progress: { attempted, total } }) => {
+  return <ProgressBar now={(attempted / total) * 100} />;
+};
 
 export default QuizProgressBar;

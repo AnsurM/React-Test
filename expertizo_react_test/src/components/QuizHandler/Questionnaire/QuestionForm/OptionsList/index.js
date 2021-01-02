@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
-export default function OptionsList({ options, onClickOption }) {
+export default function OptionsList({ options, onClickOption, disabled }) {
   return (
     <Row>
       {options.map((option) => (
@@ -14,6 +14,7 @@ export default function OptionsList({ options, onClickOption }) {
                 name={option}
                 variant="primary"
                 onClick={onClickOption}
+                disabled={disabled}
               >
                 {option}
               </Button>

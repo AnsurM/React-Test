@@ -1,9 +1,9 @@
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import QuestionStatistics from "./QuestionStatistics";
 import QuestionForm from "./QuestionForm";
-import { useState, useEffect } from "react";
 
-const Questionnaire = ({ questions, onAnswerQuestion }) => {
+const Questionnaire = ({ questions, onUpdateQuizProgress, onEndQuiz }) => {
   const convertQuestionToReadableFormat = (question) => {
     let tempQuestion = {};
     for (const [key, value] of Object.entries(question)) {
@@ -12,17 +12,51 @@ const Questionnaire = ({ questions, onAnswerQuestion }) => {
     return tempQuestion;
   };
 
-  const [quizProgress, setQuizProgess] = useState({});
+  const [quizProgress, setQuizProgess] = useState({
+    total: 0,
+    attempted: 0,
+    correct: 0,
+  });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
   useEffect(() => {
-    if (questions && !currentQuestion)
+    if (questions && !currentQuestion) {
       setCurrentQuestion(
         convertQuestionToReadableFormat(questions[currentQuestionIndex])
       );
+
+      let qp = { ...quizProgress };
+      qp.total = questions.length;
+      setQuizProgess(qp);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questions]);
+
+  useEffect(() => {
+    setCurrentQuestion(
+      convertQuestionToReadableFormat(questions[currentQuestionIndex])
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestionIndex]);
+
+  useEffect(() => {
+    onUpdateQuizProgress(quizProgress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quizProgress]);
+
+  const onSelectAnswer = (isAnswerCorrect) => {
+    let qp = { ...quizProgress };
+    qp.attempted += 1;
+    if (isAnswerCorrect) qp.correct += 1;
+    setQuizProgess(qp);
+  };
+
+  const onClickNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1)
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    else onEndQuiz();
+  };
 
   return currentQuestion ? (
     <Container>
@@ -38,7 +72,12 @@ const Questionnaire = ({ questions, onAnswerQuestion }) => {
       <br />
       <Row>
         <Col>
-          <QuestionForm question={currentQuestion} />
+          <QuestionForm
+            question={currentQuestion}
+            isLastQuestion={currentQuestionIndex === questions.length - 1}
+            onSelectAnswer={onSelectAnswer}
+            onClickNextQuestion={onClickNextQuestion}
+          />
         </Col>
       </Row>
     </Container>

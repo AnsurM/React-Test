@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 
@@ -8,6 +9,13 @@ export default function QuestionStatistics({
   totalQuestions,
   question: { category, difficulty },
 }) {
+  const [difficultyRating, setDifficultyRating] = useState(
+    diffRating[difficulty]
+  );
+  useEffect(() => {
+    setDifficultyRating(diffRating[difficulty]);
+  }, [difficulty]);
+
   return (
     <Container>
       <Row>
@@ -20,11 +28,11 @@ export default function QuestionStatistics({
           <h4>{category}</h4>
         </Col>
       </Row>
-      <Row>
+      <Row key={difficultyRating}>
         <Col>
           <ReactStars
             count={3}
-            value={diffRating[difficulty]}
+            value={difficultyRating}
             size={24}
             activeColor="#ffd700"
             edit={false}
