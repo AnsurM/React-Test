@@ -17,12 +17,15 @@ const QuizHandler = () => {
           <ProgressBar progress={progress} />
         </Col>
       </Row>
+      <br />
       <Row>
+        <Col className="col-md-2"></Col>
         <Col>
           <Questionnaire questions={questions} onAnswerQuestion={() => {}} />
         </Col>
+        <Col className="col-md-2"></Col>
       </Row>
-      <Row>
+      <Row className="stickyScoreIndicator">
         <Col>
           <ScorePredictor score={score} />
         </Col>

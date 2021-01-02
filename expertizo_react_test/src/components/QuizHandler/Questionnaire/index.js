@@ -35,9 +35,10 @@ const Questionnaire = ({ questions, onAnswerQuestion }) => {
           />
         </Col>
       </Row>
+      <br />
       <Row>
         <Col>
-          <QuestionForm />
+          <QuestionForm question={currentQuestion} />
         </Col>
       </Row>
     </Container>

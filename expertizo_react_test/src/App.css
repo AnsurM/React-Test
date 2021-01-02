@@ -7,6 +7,14 @@
   pointer-events: none;
 }
 
+.stickyScoreIndicator {
+  bottom: 50px;
+  position: fixed;
+  width: 50%;
+  left: 25%;
+  right: 0;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
